@@ -1,0 +1,23 @@
+{
+  "short_name": "Choir",
+  "name": "INHERITANCE CHOIR Management System",
+  "description": "Complete church choir management: members, attendance, contributions, songs",
+  "icons": [
+    {
+      "src": "icons/icon-192.png",
+      "type": "image/png",
+      "sizes": "192x192",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "icons/icon-512.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ],
+  "start_url": ".",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "theme_color": "#C9A84C",
+  "background_color": "#080C14"
+}

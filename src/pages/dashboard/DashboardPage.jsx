@@ -40,6 +40,7 @@ import {
 import { eventsService, auditService } from '../../services/index';
 import { Avatar } from '../../components/shared/index';
 import { formatDate, formatCurrency, daysUntil, attendanceColor, getInitials } from '../../utils/index';
+import { useRealtimeSync } from '../../hooks/useRealtimeSync';
 
 /* ── Inject keyframes once ───────────────────────────────────── */
 const STYLES = `
@@ -528,18 +529,26 @@ export default function DashboardPage() {
   injectStyles();
   const { session } = useAuth();
   const navigate    = useNavigate();
+  const [tick, setTick] = useState(0);
+
+  // Force re-render on relevant real-time events
+  useRealtimeSync([
+    'member:created', 'member:updated', 'member:deleted',
+    'contribution:created', 'contribution:deleted',
+    'attendance:marked', 'event:created', 'event:updated'
+  ], () => setTick(t => t + 1));
 
   /* ── Pre-compute ─────────────────────────────────────────── */
-  const stats        = useMemo(()=>getSummaryStats(),[]);
-  const contribTrend = useMemo(()=>getContributionTrend(12),[]);
-  const attendTrend  = useMemo(()=>getAttendanceTrend(12),[]);
-  const voiceDist    = useMemo(()=>getVoiceDistribution(),[]);
-  const topContribs  = useMemo(()=>getTopContributors(7),[]);
-  const yoyData      = useMemo(()=>getYoYContributions(),[]);
-  const memberGrowth = useMemo(()=>getMemberGrowth(12),[]);
-  const memberRates  = useMemo(()=>getMemberAttendanceRates(),[]);
-  const upcoming     = useMemo(()=>eventsService.getUpcoming().slice(0,5),[]);
-  const auditLog     = useMemo(()=>auditService.getAll().slice(0,10),[]);
+  const stats        = useMemo(()=>getSummaryStats(),[tick]);
+  const contribTrend = useMemo(()=>getContributionTrend(12),[tick]);
+  const attendTrend  = useMemo(()=>getAttendanceTrend(12),[tick]);
+  const voiceDist    = useMemo(()=>getVoiceDistribution(),[tick]);
+  const topContribs  = useMemo(()=>getTopContributors(7),[tick]);
+  const yoyData      = useMemo(()=>getYoYContributions(),[tick]);
+  const memberGrowth = useMemo(()=>getMemberGrowth(12),[tick]);
+  const memberRates  = useMemo(()=>getMemberAttendanceRates(),[tick]);
+  const upcoming     = useMemo(()=>eventsService.getUpcoming().slice(0,5),[tick]);
+  const auditLog     = useMemo(()=>auditService.getAll().slice(0,10),[tick]);
 
   /* ── Sparklines ──────────────────────────────────────────── */
   const contribSpark = contribTrend.slice(-6).map(d=>d.total||(d.tithe+d.offering+d.special_gift+d.welfare_fund+d.other)||0);

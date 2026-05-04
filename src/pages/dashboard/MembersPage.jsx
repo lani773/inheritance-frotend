@@ -217,7 +217,7 @@ export default function MembersPage() {
           />
           <Select
             label="Voice Part" value={form.voicePart} onChange={handleFormChange('voicePart')}
-            options={VOICE_PARTS.map(vp => ({ value: vp, label: vp }))} placeholder="Select Voice Part" required
+            options={VOICE_PARTS.map(vp => ({ value: vp.id, label: vp.label }))} placeholder="Select Voice Part" required
           />
           <Select
             label="Role" value={form.role} onChange={handleFormChange('role')}

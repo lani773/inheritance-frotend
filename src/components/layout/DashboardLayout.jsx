@@ -17,6 +17,7 @@ import { useAuth }    from '../../context/AuthContext';
 import { useSidebar } from '../../context/SidebarContext';
 import { useToast }   from '../../context/ToastContext';
 import { Avatar, Badge, Spinner } from '../shared/index';
+import WsStatusBadge from '../shared/WsStatusBadge';
 import { notificationsService, membersService } from '../../services/index';
 import { formatDate } from '../../utils/index';
 
@@ -515,7 +516,11 @@ export default function DashboardLayout() {
           </div>
 
           {/* ── Right side actions ─────────────────────────── */}
-          <div style={{ marginLeft: 'auto', display: 'flex', alignItems: 'center', gap: 8, flexShrink: 0 }}>
+          <div style={{ marginLeft: 'auto', display: 'flex', alignItems: 'center', gap: 12, flexShrink: 0 }}>
+
+            <div className="hide-mobile">
+              <WsStatusBadge />
+            </div>
 
             {/* Notification bell */}
             <div ref={notifRef} style={{ position: 'relative' }}>

@@ -24,6 +24,7 @@ import { Tabs, Badge, ProgressBar, Avatar } from '../../components/shared/index'
 import { PageHeader, StatCard } from '../../components/shared/index';
 import { formatCurrency, formatDate, attendanceColor } from '../../utils/index';
 import Storage, { KEYS } from '../../storage/engine';
+import { useRealtimeSync } from '../../hooks/useRealtimeSync';
 
 /* ── Design tokens ───────────────────────────────────────────── */
 const NEON = {
@@ -1214,6 +1215,14 @@ function RadialVoiceChart({ data=[], size=200 }) {
    ══════════════════════════════════════════════════════════════════ */
 export default function AnalyticsPage() {
   const [tab, setTab] = useState('financial');
+  const [tick, setTick] = useState(0);
+
+  // Force re-render on relevant real-time events
+  useRealtimeSync([
+    'member:created', 'member:updated', 'member:deleted',
+    'contribution:created', 'contribution:deleted',
+    'attendance:marked', 'event:created', 'event:updated'
+  ], () => setTick(t => t + 1));
 
   const tabs = [
     { id:'financial',  label:'Financial',  icon:'💰' },
@@ -1222,15 +1231,15 @@ export default function AnalyticsPage() {
     { id:'insights',   label:'Insights',   icon:'💡' },
   ];
 
-  const stats       = useMemo(() => getSummaryStats(),        []);
-  const contribType = useMemo(() => getContributionByType(),  []);
-  const topContribs = useMemo(() => getTopContributors(8),    []);
-  const yoyData     = useMemo(() => getYoYContributions(),    []);
-  const trend12     = useMemo(() => getContributionTrend(12), []);
-  const attend12    = useMemo(() => getAttendanceTrend(12),   []);
-  const voiceDist   = useMemo(() => getVoiceDistribution(),   []);
-  const memberRates = useMemo(() => getMemberAttendanceRates(),[]);
-  const growth12    = useMemo(() => getMemberGrowth(12),      []);
+  const stats       = useMemo(() => getSummaryStats(),        [tick]);
+  const contribType = useMemo(() => getContributionByType(),  [tick]);
+  const topContribs = useMemo(() => getTopContributors(8),    [tick]);
+  const yoyData     = useMemo(() => getYoYContributions(),    [tick]);
+  const trend12     = useMemo(() => getContributionTrend(12), [tick]);
+  const attend12    = useMemo(() => getAttendanceTrend(12),   [tick]);
+  const voiceDist   = useMemo(() => getVoiceDistribution(),   [tick]);
+  const memberRates = useMemo(() => getMemberAttendanceRates(),[tick]);
+  const growth12    = useMemo(() => getMemberGrowth(12),      [tick]);
 
   const contributions = Storage.getList(KEYS.CONTRIBUTIONS);
   const members       = Storage.getList(KEYS.MEMBERS);

@@ -21,7 +21,7 @@ import React, {
 import Storage, { KEYS } from '../storage/engine';
 import { SESSION } from '../config/constants';
 
-const WS_URL = process.env.REACT_APP_WS_URL || 'ws://localhost:8080/ws';
+const WS_URL = process.env.REACT_APP_WS_URL || 'wss://inheritance-backend--irumvafils3.replit.app/ws';
 
 // ── Create Context ─────────────────────────────────────────────
 const AuthContext = createContext(null);

@@ -372,9 +372,10 @@ src/
 All components work with mock/localStorage data by default.
 To connect to the Go Gin backend (Task 4):
 
-1. Set `REACT_APP_API_URL=http://localhost:8080/api/v1` in `.env`
-2. Replace mock data in `src/services/index.js` with real API calls
-3. Set `REACT_APP_WS_URL=ws://localhost:8080/ws` for real-time features
+1. Set `REACT_APP_API_URL=https://inheritance-backend--irumvafils3.replit.app/api/v1` in `.env`
+2. Set `REACT_APP_USE_LOCAL_STORAGE=false` so services call the real backend
+3. Set `REACT_APP_WS_URL=wss://inheritance-backend--irumvafils3.replit.app/ws` for real-time features
+4. Keep `REACT_APP_API_FALLBACK_TO_LOCAL=true` if the frontend should remain usable when the backend is unavailable
 4. The `useOfflineData` hook handles caching automatically
 
 ---

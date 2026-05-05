@@ -9,10 +9,10 @@
 
 const API_CONFIG = {
   /** Base URL for the backend REST API.
-   *  Defaults to the Go Gin backend for local development.
+   *  Defaults to the deployed Replit backend.
    *  Set REACT_APP_API_URL in .env for production.
    */
-  BASE_URL: process.env.REACT_APP_API_URL || 'http://localhost:8080/api/v1',
+  BASE_URL: process.env.REACT_APP_API_URL || 'https://inheritance-backend--irumvafils3.replit.app/api/v1',
 
   /** Request timeout in milliseconds */
   TIMEOUT: 10000,

@@ -13,8 +13,8 @@
  */
 
 // ── Configuration ──────────────────────────────────────────────
-const BASE_URL   = process.env.REACT_APP_API_URL  || 'http://localhost:8080/api/v1';
-const WS_URL     = process.env.REACT_APP_WS_URL   || 'ws://localhost:8080/ws';
+const BASE_URL   = process.env.REACT_APP_API_URL  || 'https://inheritance-backend--irumvafils3.replit.app/api/v1';
+const WS_URL     = process.env.REACT_APP_WS_URL   || 'wss://inheritance-backend--irumvafils3.replit.app/ws';
 const TIMEOUT_MS = 15_000;
 
 // ── Typed API Errors ───────────────────────────────────────────

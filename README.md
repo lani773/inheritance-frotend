@@ -74,10 +74,17 @@ const membersService = {
 };
 ```
 
-Set your backend URL in `src/config/api.config.js`:
+Set your backend URL with environment variables:
 ```js
-export const API_BASE = process.env.REACT_APP_API_URL || 'http://localhost:4000/api';
+REACT_APP_API_URL=https://inheritance-backend--irumvafils3.replit.app/api/v1
+REACT_APP_WS_URL=wss://inheritance-backend--irumvafils3.replit.app/ws
+REACT_APP_USE_LOCAL_STORAGE=false
+REACT_APP_API_FALLBACK_TO_LOCAL=true
 ```
+
+The backend must allow CORS from the deployed Netlify frontend, accept
+`Content-Type` and `Authorization` headers, and expose REST routes under
+`/api/v1` plus realtime WebSocket traffic under `/ws`.
 
 ---
 
